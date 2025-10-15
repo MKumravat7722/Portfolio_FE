@@ -1,3 +1,4 @@
+// ...existing code...
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import homeImage from "../assets/Home.jpg";
@@ -10,7 +11,7 @@ export default function Home() {
     subtitle: "",
   });
 
-  useEffect(() => {;
+  useEffect(() => {
     getHomeData()
       .then((res) => setHomeData(res.data))
       .catch((err) => console.error(err));
@@ -18,7 +19,7 @@ export default function Home() {
 
   return (
     <section
-      className="d-flex align-items-center justify-content-center text-center vh-100 text-white position-relative"
+      className="d-flex align-items-center justify-content-center text-center vh-100 text-white position-relative home-hero"
       style={{
         backgroundImage: `url(${homeImage})`,
         backgroundSize: "cover",
@@ -26,42 +27,70 @@ export default function Home() {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          backgroundColor: "rgba(0, 0, 0, 0.4)",
-        }}
-      ></div>
+      <style>{`
+        .home-hero::before{
+          content:"";
+          position:absolute;
+          inset:0;
+          background: linear-gradient(180deg, rgba(6,8,15,0.55), rgba(6,8,15,0.75));
+          z-index:0;
+        }
+        .hero-inner{ position:relative; z-index:1; max-width:900px; padding:0 16px; }
+        .hero-title { font-weight:700; letter-spacing: -0.02em; margin-bottom:8px; }
+        .hero-title .name { color: #06b6d4; }
+        .hero-sub {
+          display:inline-block;
+          margin-top:10px;
+          background: rgba(255,255,255,0.06);
+          padding:8px 14px;
+          border-radius:999px;
+          color: #e6f0ff;
+          font-weight:600;
+          border: 1px solid rgba(255,255,255,0.04);
+        }
+        .hero-lead { color: rgba(255,255,255,0.88); margin-top:12px; font-size:1.125rem; }
+        .cta-btn {
+          min-width:160px;
+        }
+        .btn-info-custom {
+          background: linear-gradient(90deg,#06b6d4,#7c3aed);
+          border: none;
+        }
+        .btn-outline-custom {
+          border-color: rgba(255,255,255,0.18);
+          color: #fff;
+        }
+        .hero-actions { margin-top:22px; }
+        @media (max-width:575px){
+          .hero-title { font-size:2rem; }
+        }
+      `}</style>
 
-      <div style={{ position: "relative", zIndex: 1 }}>
-        <h1 className="display-3 fw-bold">
+      <div className="hero-inner">
+        <h1 className="display-3 hero-title">
           Hi, I’m{" "}
-          <span className="text-info">
+          <span className="name">
             {homeData.name || "Your Name"}
           </span>
         </h1>
-        <p className="lead mt-3">
-          {homeData.title || "Your Title"} |{" "}
-          {homeData.subtitle || "Your Specialization"}
-        </p>
 
-        <div className="mt-4">
-          <a
-            href="#projects"
-            className="btn btn-info btn-lg me-3 text-white"
-          >
-            View My Work
-          </a>
-          <a
-            href="#contact"
-            className="btn btn-outline-light btn-lg"
-          >
-            Contact Me
-          </a>
+        <div className="d-flex justify-content-center align-items-center flex-column">
+          <div className="hero-sub">
+            {homeData.title || "Your Title"} &nbsp;•&nbsp; {homeData.subtitle || "Your Specialization"}
+          </div>
+
+          <p className="lead hero-lead">
+            {homeData.description || "Crafting clean, responsive web apps with attention to UX and performance."}
+          </p>
+
+          <div className="hero-actions d-flex flex-wrap justify-content-center gap-3">
+            <a href="#projects" className="btn btn-info btn-lg cta-btn btn-info-custom text-white">
+              View My Work
+            </a>
+            <a href="#contact" className="btn btn-outline-light btn-lg cta-btn btn-outline-custom">
+              Contact Me
+            </a>
+          </div>
         </div>
       </div>
     </section>
