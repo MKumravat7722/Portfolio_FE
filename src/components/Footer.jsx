@@ -1,6 +1,5 @@
-// src/components/Footer.jsx
 import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from "react-icons/fa";
-import footerBg from "../assets/project.jpg"; // Replace with your image path
+import footerBg from "../assets/project.jpg";
 
 export default function Footer() {
   return (
@@ -12,10 +11,9 @@ export default function Footer() {
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
-    minHeight: "150px", // ensure visible height
+    minHeight: "150px",
   }}
 >
-  {/* Dark overlay */}
   <div
     style={{
       position: "absolute",
@@ -23,7 +21,7 @@ export default function Footer() {
       left: 0,
       width: "100%",
       height: "100%",
-      backgroundColor: "rgba(0,0,0,0.5)", // slightly transparent overlay
+      backgroundColor: "rgba(0,0,0,0.5)",
       zIndex: 0,
     }}
   ></div>

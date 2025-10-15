@@ -1,7 +1,6 @@
-// src/components/Contact.jsx
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import contactBg from "../assets/new.jpg"; // Your background image
+import contactBg from "../assets/new.jpg";
 import { sendContactMessage } from "../api/api";
 
 export default function Contact() {
@@ -49,7 +48,6 @@ export default function Contact() {
         backgroundRepeat: "no-repeat",
       }}
     >
-      {/* Dark overlay */}
       <div
         style={{
           position: "absolute",

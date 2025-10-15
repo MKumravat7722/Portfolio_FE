@@ -1,28 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import bgImage from "../assets/skill.jpg"; // replace with your image path
-
-// Dummy skill data for now
-const dummySkills = [
-  { name: "React", percentage: 90 },
-  { name: "Ruby on Rails", percentage: 85 },
-  { name: "JavaScript", percentage: 95 },
-  { name: "HTML & CSS", percentage: 95 },
-  { name: "Tailwind CSS", percentage: 80 },
-  { name: "PostgreSQL", percentage: 75 },
-];
+import bgImage from "../assets/skill.jpg";
+import { getSkills } from "../api/api";
 
 export default function Skills() {
   const [skills, setSkills] = useState([]);
 
   useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setSkills(dummySkills);
-    }, 500);
 
-    // Replace with API call when backend is ready
-    // getSkills().then(res => setSkills(res.data)).catch(console.log);
+    getSkills().then(res => setSkills(res.data)).catch(console.log);
   }, []);
 
   return (
@@ -37,7 +23,6 @@ export default function Skills() {
         position: "relative",
       }}
     >
-      {/* Overlay */}
       <div
         style={{
           position: "absolute",
@@ -45,7 +30,7 @@ export default function Skills() {
           left: 0,
           width: "100%",
           height: "100%",
-          backgroundColor: "rgba(26, 26, 46, 0.8)", // dark overlay
+          backgroundColor: "rgba(26, 26, 46, 0.8)",
           zIndex: 0,
         }}
       ></div>

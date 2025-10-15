@@ -1,49 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-// Dummy data for now
-const dummyProjects = [
-  {
-    title: "InstaClone",
-    description: "A full-stack social media application built with React and Ruby on Rails.",
-    techStack: ["React", "Rails", "PostgreSQL", "Bootstrap"],
-    liveUrl: "#", // Replace with actual URL later
-    githubUrl: "#",
-  },
-  {
-    title: "E-Commerce App",
-    description: "Online shopping platform with product catalog, cart, and checkout system.",
-    techStack: ["React", "Rails", "Stripe API", "Tailwind CSS"],
-    liveUrl: "#",
-    githubUrl: "#",
-  },
-  {
-    title: "Portfolio Website",
-    description: "My personal portfolio website to showcase projects and skills.",
-    techStack: ["React", "Bootstrap", "Vite", "Tailwind CSS"],
-    liveUrl: "#",
-    githubUrl: "#",
-  },
-  {
-    title: "Portfolio Website",
-    description: "My personal portfolio website to showcase projects and skills.",
-    techStack: ["React", "Bootstrap", "Vite", "Tailwind CSS"],
-    liveUrl: "#",
-    githubUrl: "#",
-  },
-];
+import { getProjects } from "../api/api";
 
 export default function Projects() {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setProjects(dummyProjects);
-    }, 500);
-
-    // Replace with API call when backend is ready
-    // getProjects().then(res => setProjects(res.data)).catch(console.log);
+    getProjects().then(res => setProjects(res.data)).catch(console.log);
   }, []);
 
   return (
