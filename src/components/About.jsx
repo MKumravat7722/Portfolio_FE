@@ -13,7 +13,6 @@ export default function About() {
       .catch(console.log);
   }, []);
 
-  const skills = profile?.skills || ["React", "JavaScript", "CSS"];
 
   return (
     <section id="about" className="py-5 text-white" style={{ background: "linear-gradient(135deg,#071124 0%, #0b2540 55%, #06202a 100%)" }}>
@@ -83,12 +82,6 @@ export default function About() {
                 <div className="col-12 mb-2">
                   <strong className="text-info">Available:</strong> {profile?.availability || "N/A"}
                 </div>
-              </div>
-
-              <div className="mt-3">
-                {skills.map((s) => (
-                  <span key={s} className="skill-badge">{s}</span>
-                ))}
               </div>
 
               <div className="mt-3">
