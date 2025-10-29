@@ -33,18 +33,32 @@ const Navbar = () => {
           className=" navbar-collapse justify-content-end align-items-center"
           id="navbarNav"
         >
-          <ul className="navbar-nav me-3">
-            {["Home", "About", "Services", "Skills", "Projects", "Education", "Contact"].map(
-              (item) => (
-                <li className="nav-item" key={item}>
-                <a className="nav-link text-white fw-semibold px-3" href={`#${item.toLowerCase()}`}>
-                  {item}
-                </a>
-                </li>
-              )
-            )}
+            <ul className="navbar-nav me-3">
+            {[
+              "Home",
+              "About",
+              "Services",
+              "Skills",
+              "Projects",
+              "Education",
+              "Contact",
+            ].map((item) => (
+              <li className="nav-item" key={item}>
+                {item === "Home" ? (
+                  <a className="nav-link text-white fw-semibold px-3" href="#">
+                    {item}
+                  </a>
+                ) : (
+                  <a
+                    className="nav-link text-white fw-semibold px-3"
+                    href={`#${item.toLowerCase()}`}
+                  >
+                    {item}
+                  </a>
+                )}
+              </li>
+            ))}
           </ul>
-
         </div>
       </div>
     </nav>

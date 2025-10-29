@@ -87,7 +87,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-3">
-          <a href="#home" className="footer-link" aria-label="Back to top">
+          <a href="#" className="footer-link" aria-label="Back to top">
             Back to Top ↑
           </a>
         </div>
