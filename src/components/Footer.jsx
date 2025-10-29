@@ -1,7 +1,22 @@
 import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from "react-icons/fa";
 import footerBg from "../assets/project.jpg";
+import { useEffect, useState } from "react";
+import { getHomeData } from "../api/api";
 
 export default function Footer() {
+  const [homeData, setHomeData] = useState({
+    name: "",
+    title: "",
+    subtitle: "",
+  });
+
+  useEffect(() => {
+    getHomeData()
+      .then((res) => setHomeData(res.data))
+      .catch((err) => console.error(err));
+  }, []);
+
+
   return (
     <footer
       className="py-5 text-white position-relative"
@@ -25,7 +40,7 @@ export default function Footer() {
 
       <div className="container text-center position-relative" style={{ zIndex: 1 }}>
         <p className="mb-1" style={{ fontSize: 14 }}>
-          © {new Date().getFullYear()} Mohit Kumravat. All rights reserved.
+          © {new Date().getFullYear()} {homeData.name}. All rights reserved.
         </p>
         <p className="mb-3" style={{ color: "rgba(255,255,255,0.85)", marginBottom: 16 }}>
           Thank you for visiting my portfolio! Let's connect.
