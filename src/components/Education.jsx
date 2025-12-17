@@ -5,7 +5,6 @@ import eduBg from "../assets/education.jpg";
 
 export default function Education() {
 
-  // ✅ Hard-coded fallback education
   const [education, setEducation] = useState([
     {
       degree: "Bachelor of Computer Science",
@@ -32,7 +31,6 @@ export default function Education() {
   useEffect(() => {
     getEducation()
       .then((res) => {
-        // ✅ Override only if API returns valid data
         if (Array.isArray(res?.data) && res.data.length > 0) {
           setEducation(res.data);
         }

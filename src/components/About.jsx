@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import profilePlaceholder from "../assets/profile.jpg";
 import { getProfile } from "../api/api";
+import profileImage from "../assets/profile.png";
 
 export default function About() {
   // ✅ Hardcoded fallback data
@@ -13,7 +14,7 @@ export default function About() {
     bio: "Full Stack Developer with 2+ years of hands-on experience in Ruby on Rails, ReactJS, and PostgreSQL. Passionate about solving real-world problems with clean code, scalable design, and modern DevOps practices.",
     experience: "2+ Years",
     availability: "Open for full-time and freelance opportunities",
-    profile_image_url: "src/assets/Screenshot 2025-12-17 133617.png",
+    profile_image_url: profileImage,
     resume_url: "",
   });
 
