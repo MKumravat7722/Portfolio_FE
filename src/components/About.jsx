@@ -1,21 +1,46 @@
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import profilePlaceholder from "../assets/profile.jpg";
-
 import { getProfile } from "../api/api";
 
 export default function About() {
-  const [profile, setProfile] = useState(null);
+  // ✅ Hardcoded fallback data
+  const [profile, setProfile] = useState({
+    name: "Mohit Kumravat",
+    email: "mohitkumravat22@gmail.com",
+    dob: "2002-05-10",
+    location: "Indore, India",
+    bio: "Full Stack Developer with 2+ years of hands-on experience in Ruby on Rails, ReactJS, and PostgreSQL. Passionate about solving real-world problems with clean code, scalable design, and modern DevOps practices.",
+    experience: "2+ Years",
+    availability: "Open for full-time and freelance opportunities",
+    profile_image_url: "src/assets/Screenshot 2025-12-17 133617.png",
+    resume_url: "",
+  });
 
   useEffect(() => {
     getProfile()
-      .then((res) => setProfile(res.data))
-      .catch(console.log);
+      .then((res) => {
+        if (res?.data && Object.keys(res.data).length > 0) {
+          setProfile((prev) => ({
+            ...prev,
+            ...res.data,
+          }));
+        }
+      })
+      .catch((err) => {
+        console.error("Profile API failed, using fallback data", err);
+      });
   }, []);
 
-
   return (
-    <section id="about" className="py-5 text-white" style={{ background: "linear-gradient(135deg,#071124 0%, #0b2540 55%, #06202a 100%)" }}>
+    <section
+      id="about"
+      className="py-5 text-white"
+      style={{
+        background:
+          "linear-gradient(135deg,#071124 0%, #0b2540 55%, #06202a 100%)",
+      }}
+    >
       <style>{`
         .about-card {
           background: rgba(255,255,255,0.03);
@@ -55,49 +80,56 @@ export default function About() {
           <div className="row align-items-center">
             <div className="col-md-4 text-center mb-4 mb-md-0">
               <img
-                src={profile?.profile_image_url || profilePlaceholder}
-                alt={profile?.name || "Profile Image"}
+                src={profile.profile_image_url || profilePlaceholder}
+                alt={profile.name}
                 className="img-fluid rounded-circle border border-3 border-info profile-img"
-                style={{ width: "200px", height: "200px" }}
               />
             </div>
 
             <div className="col-md-8">
-              <h3 className="fw-bold name-gradient">{profile?.name || "Your Name"}</h3>
-              <p className="lead mt-3 card-meta">{profile?.bio || "I'm a passionate developer. Your introduction goes here."}</p>
+              <h3 className="fw-bold name-gradient">{profile.name}</h3>
+
+              <p className="lead mt-3 card-meta">{profile.bio}</p>
 
               <div className="row text-start mt-4 card-meta">
                 <div className="col-6 mb-2">
-                  <strong className="text-info">Experience:</strong> {profile?.experience || "N/A"}
+                  <strong className="text-info">Experience:</strong>{" "}
+                  {profile.experience}
                 </div>
                 <div className="col-6 mb-2">
-                  <strong className="text-info">Location:</strong> {profile?.location || "N/A"}
+                  <strong className="text-info">Location:</strong>{" "}
+                  {profile.location}
                 </div>
                 <div className="col-6 mb-2">
-                  <strong className="text-info">Email:</strong> <a className="card-meta" href={`mailto:${profile?.email || "you@example.com"}`}>{profile?.email || "you@example.com"}</a>
+                  <strong className="text-info">Email:</strong>{" "}
+                  <a
+                    className="card-meta"
+                    href={`mailto:${profile.email}`}
+                  >
+                    {profile.email}
+                  </a>
                 </div>
                 <div className="col-6 mb-2">
-                  <strong className="text-info">DOB:</strong> {profile?.dob || "DD/MM/YYYY"}
+                  <strong className="text-info">DOB:</strong>{" "}
+                  {profile.dob}
                 </div>
                 <div className="col-12 mb-2">
-                  <strong className="text-info">Available:</strong> {profile?.availability || "N/A"}
+                  <strong className="text-info">Available:</strong>{" "}
+                  {profile.availability}
                 </div>
               </div>
 
-              <div className="mt-3">
-                {profile?.resume_url ? (
-                  <a
-                    href={profile.resume_url}
-                    className="btn btn-outline-info text-white fw-semibold mt-3"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    download
-                    aria-label="Download resume"
-                  >
-                    Download Resume
-                  </a>
-                ) : null}
-              </div>
+              {profile.resume_url && (
+                <a
+                  href={profile.resume_url}
+                  className="btn btn-outline-info text-white fw-semibold mt-3"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  download
+                >
+                  Download Resume
+                </a>
+              )}
             </div>
           </div>
         </div>

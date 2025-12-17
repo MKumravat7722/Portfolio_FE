@@ -1,4 +1,3 @@
-// ...existing code...
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import homeImage from "../assets/Home.jpg";
@@ -6,15 +5,26 @@ import { getHomeData } from "../api/api";
 
 export default function Home() {
   const [homeData, setHomeData] = useState({
-    name: "",
-    title: "",
-    subtitle: "",
+    name: "Mohit Kumravat",
+    title: "Full Stack Developer",
+    subtitle: "Building modern, scalable web apps with Ruby on Rails and React",
+    description:
+      "Welcome to my portfolio backend! I'm Mohit Kumravat, a passionate Full Stack Developer specializing in Ruby on Rails and React. With over 2 years of experience, I create robust web applications that solve real-world problems. Explore my services, skills, and projects to see how I can help bring your ideas to life.",
   });
 
   useEffect(() => {
     getHomeData()
-      .then((res) => setHomeData(res.data))
-      .catch((err) => console.error(err));
+      .then((res) => {
+        if (res?.data && Object.keys(res.data).length > 0) {
+          setHomeData((prev) => ({
+            ...prev,
+            ...res.data, 
+          }));
+        }
+      })
+      .catch((err) => {
+        console.error("Home API failed, using fallback data", err);
+      });
   }, []);
 
   return (
@@ -49,9 +59,7 @@ export default function Home() {
           border: 1px solid rgba(255,255,255,0.04);
         }
         .hero-lead { color: rgba(255,255,255,0.88); margin-top:12px; font-size:1.125rem; }
-        .cta-btn {
-          min-width:160px;
-        }
+        .cta-btn { min-width:160px; }
         .btn-info-custom {
           background: linear-gradient(90deg,#06b6d4,#7c3aed);
           border: none;
@@ -68,19 +76,16 @@ export default function Home() {
 
       <div className="hero-inner">
         <h1 className="display-3 hero-title">
-          Hi, I’m{" "}
-          <span className="name">
-            {homeData.name || "Your Name"}
-          </span>
+          Hi, I’m <span className="name">{homeData.name}</span>
         </h1>
 
         <div className="d-flex justify-content-center align-items-center flex-column">
           <div className="hero-sub">
-            {homeData.title || "Your Title"} &nbsp;•&nbsp; {homeData.subtitle || "Your Specialization"}
+            {homeData.title} &nbsp;•&nbsp; {homeData.subtitle}
           </div>
 
           <p className="lead hero-lead">
-            {homeData.description || "Crafting clean, responsive web apps with attention to UX and performance."}
+            {homeData.description}
           </p>
 
           <div className="hero-actions d-flex flex-wrap justify-content-center gap-3">

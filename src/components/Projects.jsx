@@ -1,13 +1,109 @@
-// ...existing code...
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getProjects } from "../api/api";
 
 export default function Projects() {
-  const [projects, setProjects] = useState([]);
+
+  const [projects, setProjects] = useState([
+    {
+      title: "Business Payment & Transaction Platform",
+      description:
+        "Developed and maintained a full-stack payment solution enabling users to send, receive, and manage transactions securely. Implemented two-factor authentication, Twilio SMS alerts, and real-time updates using Pusher.",
+      techStack: [
+        "Ruby on Rails",
+        "ReactJS",
+        "PostgreSQL",
+        "Twilio",
+        "Pusher",
+        "Active Storage",
+        "AASM",
+      ],
+      liveUrl: "https://example.com/payment-platform",
+      githubUrl: "https://github.com/MKumravat7722/payment-platform",
+    },
+    {
+      title: "Continuous Integration & Deployment Automation",
+      description:
+        "Built CI/CD pipelines using GitHub Actions and Docker with automated testing and deployments on AWS and Heroku.",
+      techStack: [
+        "RSpec",
+        "Capybara",
+        "Docker",
+        "GitHub Actions",
+        "Heroku",
+        "AWS EC2",
+      ],
+      liveUrl: "https://example.com/ci-cd-pipeline",
+      githubUrl: "https://github.com/MKumravat7722/ci-cd-pipeline",
+    },
+    {
+      title: "Pet Care Management Platform",
+      description:
+        "Built backend APIs for a two-sided pet care marketplace with Stripe payments and admin analytics dashboard.",
+      techStack: [
+        "Ruby on Rails",
+        "PostgreSQL",
+        "Stripe",
+        "Devise",
+        "ReactJS",
+        "Chart.js",
+      ],
+      liveUrl: "https://example.com/pet-platform",
+      githubUrl: "https://github.com/MKumravat7722/pet-services",
+    },
+    {
+      title: "Learning & Assessment Portal",
+      description:
+        "Developed a learning platform with course management, assessments, certificates, and ActiveAdmin dashboard.",
+      techStack: [
+        "Ruby on Rails",
+        "ActiveAdmin",
+        "PostgreSQL",
+        "JavaScript",
+        "HTML/CSS",
+      ],
+      liveUrl: "https://example.com/learning-platform",
+      githubUrl: "https://github.com/MKumravat7722/learning-platform",
+    },
+    {
+      title: "Portfolio & Profile Management App",
+      description:
+        "Built a personal portfolio app with Rails backend, React frontend, and responsive UI using Bootstrap & Tailwind.",
+      techStack: [
+        "Ruby on Rails",
+        "ReactJS",
+        "Active Storage",
+        "Bootstrap",
+        "Tailwind CSS",
+      ],
+      liveUrl: "https://example.com/portfolio",
+      githubUrl: "https://github.com/MKumravat7722/portfolio",
+    },
+  ]);
 
   useEffect(() => {
-    getProjects().then(res => setProjects(res.data)).catch(console.log);
+    getProjects()
+      .then((res) => {
+        if (Array.isArray(res?.data) && res.data.length > 0) {
+          // ✅ Normalize API response to match frontend keys
+          const normalized = res.data.map((p) => ({
+            title: p.title,
+            description: p.description,
+            techStack: Array.isArray(p.tech_stack)
+              ? p.tech_stack
+              : JSON.parse(p.tech_stack || "[]"),
+            liveUrl: p.live_url,
+            githubUrl: p.github_url,
+            image_url: p.image_url,
+            year: p.year,
+          }));
+
+          setProjects(normalized);
+        }
+      })
+      .catch((err) =>
+        console.error("Projects API failed, using fallback data", err)
+      );
   }, []);
 
   return (
@@ -30,7 +126,6 @@ export default function Projects() {
           object-fit:cover;
           border-radius:8px;
           margin-bottom:12px;
-          box-shadow: 0 8px 30px rgba(2,6,23,0.45);
         }
         .tech-badge {
           display:inline-block;
@@ -41,15 +136,15 @@ export default function Projects() {
           background: rgba(255,255,255,0.08);
           border: 1px solid rgba(255,255,255,0.06);
         }
-        .project-actions a { margin-right:8px; }
       `}</style>
 
       <div className="container">
         <h2 className="text-center display-4 fw-bold mb-5">My Projects</h2>
+
         <div className="row">
           {projects.map((project, index) => (
             <div key={index} className="col-md-4 mb-4">
-              <div className="card project-card text-white h-100 p-4 shadow-lg rounded-4">
+              <div className="card project-card h-100 p-4 rounded-4">
                 {project.image_url && (
                   <img
                     src={project.image_url}
@@ -57,43 +152,41 @@ export default function Projects() {
                     className="project-thumb"
                   />
                 )}
-                <h4 className="fw-bold">{project.title}</h4>
-                <p className="mb-2" style={{ color: "rgba(255,255,255,0.9)" }}>{project.description}</p>
 
-                <div className="mb-2">
-                  {project.techStack?.length ? (
-                    project.techStack.map((t, i) => (
-                      <span key={i} className="tech-badge">{t}</span>
-                    ))
-                  ) : (
-                    <span className="tech-badge">No tech listed</span>
-                  )}
+                <h4 className="fw-bold">{project.title}</h4>
+                <p style={{ color: "rgba(255,255,255,0.9)" }}>
+                  {project.description}
+                </p>
+
+                <div>
+                  {project.techStack.map((tech, i) => (
+                    <span key={i} className="tech-badge">
+                      {tech}
+                    </span>
+                  ))}
                 </div>
 
-                <div className="d-flex justify-content-between mt-3 project-actions">
-                  <div>
-                    {project.liveUrl && (
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn btn-info btn-sm"
-                      >
-                        Live
-                      </a>
-                    )}
-                    {project.githubUrl && (
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn btn-outline-light btn-sm"
-                      >
-                        GitHub
-                      </a>
-                    )}
-                  </div>
-                  <small style={{ color: "rgba(255,255,255,0.75)" }}>{project.year || ""}</small>
+                <div className="d-flex gap-2 mt-3">
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-info btn-sm"
+                    >
+                      Live
+                    </a>
+                  )}
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-outline-light btn-sm"
+                    >
+                      GitHub
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
